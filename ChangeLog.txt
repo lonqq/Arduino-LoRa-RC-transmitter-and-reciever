@@ -1,3 +1,23 @@
+3.0
+--------
+Hardware changes:
+ - Moved to Atmega2560 microcontroller. The Atmega328 was quite limiting thus 2.2 is the last branch to support it.
+ - Redesigned both transmitter and receiver hardware
+
+Firmware changes:
+ - Redesigned the mixer. This new mixer borrows some ideas from OpenTx(R).
+ - Added flight modes, custom curves, logical switches, counters.
+ - Redesigned timers, function generators.
+ - Added custom telemetry.
+ - Improved safety Warnings for throttle and switch positions.
+ - Support for external EEPROM to store model data.
+ - Support for SD card model backups.
+ - Home screen widgets to display various information.
+ - Various optimizations and improvements.
+ - Major code refactoring.
+ - Redesigned the serial data and air protocols.
+ - etc.
+
 2.2
 --------
 06Mar2022
