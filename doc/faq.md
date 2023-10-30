@@ -29,6 +29,9 @@ In fact it takes less than 15ms on average to compute everything including redra
 Voice alerts are not currently supported, as I did not see much need for this feature, in fact I find them quite annoying. You can
 however modify the firmware to support voice via an external serial mp3 module.
 
+### SD card is not working or can't be detected.
+Make sure the card is formatted with the FAT (FAT16) file system. FAT32 is not supported.
+
 ### I have discovered a bug or issue. 
 Whereas I have done extensive testing for all features and fixed all known bugs and issues, I cannot guarantee total bug freeness. 
 In case you come across a bug or issue, you can file it here on GitHub and I will be happy to look into it and support.
