@@ -1,4 +1,4 @@
-# OneRC
+# Arduino based RC system
 The ultimate DIY radio control system.
 Remotely operate model airplanes, multicopters, boats, land vehicles, robots, or anything you can imagine.
 <p align="left">
