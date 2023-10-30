@@ -30,7 +30,8 @@ Voice alerts are not currently supported, as I did not see much need for this fe
 however modify the firmware to support voice via an external serial mp3 module.
 
 ### SD card is not working or can't be detected.
-Make sure the card is formatted with the FAT (FAT16) file system. FAT32 is not supported.
+Make sure the card is formatted with the FAT (FAT16 or FAT32) file system. Other file systems are not supported. Also try to keep
+the number of files on the card minimal.
 
 ### I have discovered a bug or issue. 
 Whereas I have done extensive testing for all features and fixed all known bugs and issues, I cannot guarantee total bug freeness. 
