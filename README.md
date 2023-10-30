@@ -43,4 +43,4 @@ Three buttons are used for navigation; Up, Select, Down. Long press Select to go
 <br>[Receiver binding and configuration](doc/receiver_config.md)
 
 ## Frequently Asked Questions
-[Got a question? See the FAQ first.](doc/faq.md)
+[Got a question or an issue? See the FAQ first.](doc/faq.md)
