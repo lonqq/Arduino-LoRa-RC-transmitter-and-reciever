@@ -33,7 +33,6 @@ Three buttons are used for navigation; Up, Select, Down. Long press Select to go
 <p align="left">
 <img src="doc/img1.svg"/>
 </p>
-<em>Note: These screenshots may not reflect the most recent changes.</em>
 
 ## Topics
 [Mixer](doc/mixer.md)
