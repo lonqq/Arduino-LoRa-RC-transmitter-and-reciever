@@ -2586,6 +2586,17 @@ void handleMainUI()
         drawHeader(mainMenu[MAIN_MENU_MIXER]);
         
         mixer_params_t *mxr = &Model.Mixer[thisMixIdx];
+        
+        //For safety and to prevent unintended effects, we do not directly edit the mixer output variable 
+        //but instead use some kind of delayed action, where we edit a temporary variable 
+        //and later assign it to the output in the right conditions.
+        static uint8_t tempMixerOutput;
+        static bool tempInitialised = false;
+        if(!tempInitialised)
+        {
+          tempMixerOutput = mxr->output;
+          tempInitialised = true;
+        }
 
         //--- Dynamic list ---
         
@@ -2681,7 +2692,13 @@ void handleMainUI()
                 display.setCursor(90, ypos);
                 display.print(mxr->name);
                 if(edit) 
+                {
+                  //assign from temp
+                  mxr->output = tempMixerOutput;
+                  tempInitialised = false;
+                  //change to another mix
                   thisMixIdx = incDecOnUpDown(thisMixIdx, 0, NUM_MIXSLOTS - 1, INCDEC_WRAP, INCDEC_SLOW);
+                }
               }
               break;
               
@@ -2689,19 +2706,19 @@ void handleMainUI()
               {
                 display.print(F("Output:"));
                 display.setCursor(60, ypos);
-                getSrcName(txtBuff, mxr->output, sizeof(txtBuff));
+                getSrcName(txtBuff, tempMixerOutput, sizeof(txtBuff));
                 display.print(txtBuff);
-                if(mxr->output >= SRC_CH1 && mxr->output < SRC_CH1 + NUM_RC_CHANNELS)
+                if(tempMixerOutput >= SRC_CH1 && tempMixerOutput < SRC_CH1 + NUM_RC_CHANNELS)
                 {
-                  uint8_t chIdx = mxr->output - SRC_CH1;
+                  uint8_t chIdx = tempMixerOutput - SRC_CH1;
                   display.setCursor(90, ypos);
                   display.print(Model.Channel[chIdx].name);
                 }
                 if(edit)
                 {
                   do {
-                  mxr->output = incDecSource(mxr->output, INCDEC_FLAG_MIX_SRC);
-                  } while(mxr->output > SRC_NONE && mxr->output < SRC_CH1); //skip over
+                  tempMixerOutput = incDecSource(tempMixerOutput, INCDEC_FLAG_MIX_SRC);
+                  } while(tempMixerOutput > SRC_NONE && tempMixerOutput < SRC_CH1); //skip over
                 }                
               }
               break;
@@ -2910,12 +2927,19 @@ void handleMainUI()
         //Show context menu icon
         display.fillRect(120, 0, 8, 7, WHITE);
         display.drawBitmap(120, 0, focusedItem == contextMenu ? icon_context_menu_focused : icon_context_menu, 8, 7, BLACK);
+        
+        //Assign from temp
+        if(!isEditMode || (buttonCode == 0 && millis() - buttonReleaseTime > 1000))
+          mxr->output = tempMixerOutput;
 
         //Open context menu
         if(focusedItem == contextMenu && clickedButton == KEY_SELECT)
         {
           changeToScreen(POPUP_MIXER_MENU);
           viewInitialised = false;
+          //assign from temp
+          mxr->output = tempMixerOutput;
+          tempInitialised = false;
         }
 
         //Exit
@@ -2923,6 +2947,9 @@ void handleMainUI()
         {
           viewInitialised = false;
           changeToScreen(SCREEN_MAIN_MENU);
+          //assign from temp
+          mxr->output = tempMixerOutput;
+          tempInitialised = false;
         } 
       }
       break;
