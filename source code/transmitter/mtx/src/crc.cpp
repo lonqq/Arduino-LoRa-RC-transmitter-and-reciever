@@ -1,5 +1,9 @@
 #include "Arduino.h"
+#if defined(AVR)
 #include <avr/pgmspace.h>
+#else  //defined(AVR)
+#include <pgmspace.h>
+#endif  //defined(AVR)
 
 #include "crc.h"
 
